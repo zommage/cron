@@ -15,7 +15,11 @@ import (
     "fmt"
     "time"
 
-    "github.com/yukongco/cron"
+    "github.com/zommage/cron"
+)
+
+const (
+    Time_Format = "2006-01-02 15:04:05"
 )
 
 func print1() {
@@ -35,25 +39,25 @@ func printc() {
 }
 
 func main() {
-    fmt.Println("12-22 */1")
+    fmt.Println("init cron")
     cronRes := cron.New()
 	
-	// 不带 jobname 的定时器 
+	//不带 jobname 的定时器 
 	cronRes.AddFunc("*/2 * * * * ?", print1)
 
-    // 带 jobname 的定时器
-	cronRes.AddFuncWithName("*/2 * * * * ?", printa, "aaa")
-	cronRes.AddFuncWithName("*/2 * * * * ?", printb, "bbb")
+    //带 jobname 的定时器, 分别创建名字为 aaa 和 bbb 的定时任务
+    cronRes.AddFuncWithName("*/2 * * * * ?", printa, "aaa")
+    cronRes.AddFuncWithName("*/2 * * * * ?", printb, "bbb")
 
-	cronRes.Start()
-	defer cronRes.Stop()
+    cronRes.Start()
+    defer cronRes.Stop()
 
-	time.Sleep(4 * time.Second)
-	cronRes.AddFuncWithName("*/2 * * * * ?", printc, "ccc")
+    time.Sleep(4 * time.Second)
+    cronRes.AddFuncWithName("*/2 * * * * ?", printc, "ccc")
 
-    // 删除名字为 bbb的 job
-	err := cronRes.RemoveJob("bbb")
-	if err != nil {
+    //删除名字为 bbb的 job
+    err := cronRes.RemoveJob("bbb")
+    if err != nil {
 		fmt.Println("remove job is err: ", err)
 		return
 	}
