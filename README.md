@@ -60,7 +60,7 @@ func main() {
     if err != nil {
         fmt.Println("remove job is err: ", err)
         return
-	}
+    }
 
     time.Sleep(4 * time.Second)
 	
