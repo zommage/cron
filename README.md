@@ -9,7 +9,7 @@
 ###
 测试例子如下:
 ```
-package testcrontab
+package main
 
 import (
     "fmt"
@@ -42,8 +42,8 @@ func main() {
     fmt.Println("init cron")
     cronRes := cron.New()
 	
-	//不带 jobname 的定时器 
-	cronRes.AddFunc("*/2 * * * * ?", print1)
+    //不带 jobname 的定时器 
+    cronRes.AddFunc("*/2 * * * * ?", print1)
 
     //带 jobname 的定时器, 分别创建名字为 aaa 和 bbb 的定时任务
     cronRes.AddFuncWithName("*/2 * * * * ?", printa, "aaa")
@@ -58,13 +58,13 @@ func main() {
     //删除名字为 bbb的 job
     err := cronRes.RemoveJob("bbb")
     if err != nil {
-		fmt.Println("remove job is err: ", err)
-		return
+        fmt.Println("remove job is err: ", err)
+        return
 	}
 
-	time.Sleep(4 * time.Second)
+    time.Sleep(4 * time.Second)
 	
-	return
+    return
 }
 ```
 ###
